@@ -2168,7 +2168,7 @@ index 6543fb19a..da4882af8 100644
 + 
 +  /* curl-impersonate: Enable TLS extensions 5 - status_request and
 +   * 18 - signed_certificate_timestamp. */
-+  SSL_CTX_enable_signed_cert_timestamps(backend->ctx);
+/* +  SSL_CTX_enable_signed_cert_timestamps(backend->ctx); */
 +  SSL_CTX_enable_ocsp_stapling(backend->ctx);
 +
    if(ssl_cert || ssl_cert_blob || ssl_cert_type) {
