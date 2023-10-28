@@ -2221,7 +2221,7 @@ index 6543fb19a..da4882af8 100644
 +   * in the Chromium's source code. */
 +
 +  /* Enable TLS GREASE. */
-+  SSL_CTX_set_grease_enabled(backend->ctx, 1);
++  SSL_CTX_set_grease_enabled(backend->ctx, 0);
 +
 +  /*
 +   * curl-impersonate: Enable TLS extension permutation, enabled by default
