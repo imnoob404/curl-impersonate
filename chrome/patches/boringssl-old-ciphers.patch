@@ -152,3 +152,95 @@ diff -u1 -Nar --exclude build --exclude tags boringssl-3a667d10e94186fd503966f56
 +    {"SHA256", ~0u, ~0u, ~0u, SSL_SHA256, 0},
 +    {"SHA384", ~0u, ~0u, ~0u, SSL_SHA384, 0},
  
+--- boringssl-3a667d10e94186fd503966f5638e134fe9fb4080/ssl/extensions.cc	2021-11-22 19:06:04.000000000 +0200
++++ boringssl/ssl/extensions.cc 2023-10-28 18:35:04.000000000 +0800
+@@ -3086,6 +3086,13 @@
+ // kExtensions contains all the supported extensions.
+ static const struct tls_extension kExtensions[] = {
+   {
++    TLSEXT_TYPE_renegotiate,
++    ext_ri_add_clienthello,
++    ext_ri_parse_serverhello,
++    ext_ri_parse_clienthello,
++    ext_ri_add_serverhello,
++  },
++  {
+     TLSEXT_TYPE_server_name,
+     ext_sni_add_clienthello,
+     ext_sni_parse_serverhello,
+@@ -3107,27 +3114,6 @@
+     ext_ems_add_serverhello,
+   },
+   {
+-    TLSEXT_TYPE_renegotiate,
+-    ext_ri_add_clienthello,
+-    ext_ri_parse_serverhello,
+-    ext_ri_parse_clienthello,
+-    ext_ri_add_serverhello,
+-  },
+-  {
+-    TLSEXT_TYPE_supported_groups,
+-    ext_supported_groups_add_clienthello,
+-    ext_supported_groups_parse_serverhello,
+-    ext_supported_groups_parse_clienthello,
+-    dont_add_serverhello,
+-  },
+-  {
+-    TLSEXT_TYPE_ec_point_formats,
+-    ext_ec_point_add_clienthello,
+-    ext_ec_point_parse_serverhello,
+-    ext_ec_point_parse_clienthello,
+-    ext_ec_point_add_serverhello,
+-  },
+-  {
+     TLSEXT_TYPE_session_ticket,
+     ext_ticket_add_clienthello,
+     ext_ticket_parse_serverhello,
+@@ -3136,6 +3122,20 @@
+     ext_ticket_add_serverhello,
+   },
+   {
++    TLSEXT_TYPE_signature_algorithms,
++    ext_sigalgs_add_clienthello,
++    forbid_parse_serverhello,
++    ext_sigalgs_parse_clienthello,
++    dont_add_serverhello,
++  },
++  {
++    TLSEXT_TYPE_status_request,
++    ext_ocsp_add_clienthello,
++    ext_ocsp_parse_serverhello,
++    ext_ocsp_parse_clienthello,
++    ext_ocsp_add_serverhello,
++  },
++  {
+     TLSEXT_TYPE_application_layer_protocol_negotiation,
+     ext_alpn_add_clienthello,
+     ext_alpn_parse_serverhello,
+@@ -3144,17 +3144,17 @@
+     ext_alpn_add_serverhello,
+   },
+   {
+-    TLSEXT_TYPE_status_request,
+-    ext_ocsp_add_clienthello,
+-    ext_ocsp_parse_serverhello,
+-    ext_ocsp_parse_clienthello,
+-    ext_ocsp_add_serverhello,
++    TLSEXT_TYPE_ec_point_formats,
++    ext_ec_point_add_clienthello,
++    ext_ec_point_parse_serverhello,
++    ext_ec_point_parse_clienthello,
++    ext_ec_point_add_serverhello,
+   },
+   {
+-    TLSEXT_TYPE_signature_algorithms,
+-    ext_sigalgs_add_clienthello,
+-    forbid_parse_serverhello,
+-    ext_sigalgs_parse_clienthello,
++    TLSEXT_TYPE_supported_groups,
++    ext_supported_groups_add_clienthello,
++    ext_supported_groups_parse_serverhello,
++    ext_supported_groups_parse_clienthello,
+     dont_add_serverhello,
+   },
+   {
