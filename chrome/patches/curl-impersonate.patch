@@ -900,7 +900,7 @@ index c666192fc..5ea7d04c8 100644
   * See #10988 for an issue with this. */
 -#define HTTP2_HUGE_WINDOW_SIZE (100 * H2_STREAM_WINDOW_SIZE)
 +/* curl-impersonate: match Chrome window size. */
-+#define HTTP2_HUGE_WINDOW_SIZE (15 * H2_STREAM_WINDOW_SIZE)
++#define HTTP2_HUGE_WINDOW_SIZE (16 * H2_STREAM_WINDOW_SIZE)
  
 -#define H2_SETTINGS_IV_LEN  3
 +#define H2_SETTINGS_IV_LEN  8
@@ -916,9 +916,9 @@ index c666192fc..5ea7d04c8 100644
 -  iv[1].settings_id = NGHTTP2_SETTINGS_INITIAL_WINDOW_SIZE;
 -  iv[1].value = H2_STREAM_WINDOW_SIZE;
 +  /* curl-impersonate: Align HTTP/2 settings to Chrome's */
-+  iv[i].settings_id = NGHTTP2_SETTINGS_HEADER_TABLE_SIZE;
-+  iv[i].value = 0x10000;
-+  i++;
++  /* iv[i].settings_id = NGHTTP2_SETTINGS_HEADER_TABLE_SIZE; */
++  /* iv[i].value = 0x10000; */
++  /* i++; */
  
 -  iv[2].settings_id = NGHTTP2_SETTINGS_ENABLE_PUSH;
 -  iv[2].value = data->multi->push_cb != NULL;
@@ -928,18 +928,18 @@ index c666192fc..5ea7d04c8 100644
 +    i++;
 +  }
 +
-+  iv[i].settings_id = NGHTTP2_SETTINGS_MAX_CONCURRENT_STREAMS;
-+  iv[i].value = Curl_multi_max_concurrent_streams(data->multi);
-+  i++;
++  /* iv[i].settings_id = NGHTTP2_SETTINGS_MAX_CONCURRENT_STREAMS; */
++  /* iv[i].value = Curl_multi_max_concurrent_streams(data->multi); */
++  /* i++; */
 +
 +  iv[i].settings_id = NGHTTP2_SETTINGS_INITIAL_WINDOW_SIZE;
-+  iv[i].value = 0x600000;
++  iv[i].value = 0x1000000;
 +  i++;
  
 -  return 3;
-+  iv[i].settings_id = NGHTTP2_SETTINGS_MAX_HEADER_LIST_SIZE;
-+  iv[i].value = 0x40000;
-+  i++;
++  /* iv[i].settings_id = NGHTTP2_SETTINGS_MAX_HEADER_LIST_SIZE; */
++  /* iv[i].value = 0x40000; */
++  /* i++; */
 +  
 +  // curl-impersonate:
 +  // Up until Chrome 98, there was a randomly chosen setting number in the
@@ -1030,7 +1030,7 @@ index 562c05c99..b99c085d5 100644
     from the peer */
 -#define DEFAULT_MAX_CONCURRENT_STREAMS 100
 +/* curl-impersonate: Use 1000 concurrent streams like Chrome. */
-+#define DEFAULT_MAX_CONCURRENT_STREAMS 1000
++#define DEFAULT_MAX_CONCURRENT_STREAMS 100
  
  /*
   * Store nghttp2 version info in this buffer.
