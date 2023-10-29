@@ -903,7 +903,7 @@ index c666192fc..5ea7d04c8 100644
 +#define HTTP2_HUGE_WINDOW_SIZE (16 * H2_STREAM_WINDOW_SIZE)
  
 -#define H2_SETTINGS_IV_LEN  3
-+#define H2_SETTINGS_IV_LEN  8
++#define H2_SETTINGS_IV_LEN  1
  #define H2_BINSETTINGS_LEN 80
  
  static int populate_settings(nghttp2_settings_entry *iv,
@@ -948,7 +948,7 @@ index c666192fc..5ea7d04c8 100644
 +  // Curl_rand(data, (unsigned char *)&iv[4].settings_id, sizeof(iv[4].settings_id));
 +  // Curl_rand(data, (unsigned char *)&iv[4].value, sizeof(iv[4].value));
 +
-+  return i;
++  return 1;
  }
  
  static size_t populate_binsettings(uint8_t *binsettings,
@@ -1012,10 +1012,10 @@ index c666192fc..5ea7d04c8 100644
 +      DEBUGF(LOG_CF(data, cf, "[h2sid=%d] Queuing PRIORITY",
 +                    stream->id));
 +      DEBUGASSERT(stream->id != -1);
-+      rv = nghttp2_submit_priority(ctx->h2, NGHTTP2_FLAG_NONE,
-+                                   stream->id, &pri_spec);
-+      if(rv)
-+        goto out;
++      /* rv = nghttp2_submit_priority(ctx->h2, NGHTTP2_FLAG_NONE,
++                                   stream->id, &pri_spec); */
++      /* if(rv)
++        goto out; */
 +    }
    }
  
