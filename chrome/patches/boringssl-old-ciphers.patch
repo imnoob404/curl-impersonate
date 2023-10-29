@@ -244,17 +244,3 @@ diff -u1 -Nar --exclude build --exclude tags boringssl-3a667d10e94186fd503966f56
      dont_add_serverhello,
    },
    {
-@@ -3256,6 +3256,13 @@
-     ignore_parse_clienthello,
-     ext_alps_add_serverhello,
-   },
-+  {
-+	TLSEXT_TYPE_padding,
-+	true,
-+	true,
-+	true,
-+	false,
-+  },
- };
- 
- #define kNumExtensions (sizeof(kExtensions) / sizeof(struct tls_extension))
